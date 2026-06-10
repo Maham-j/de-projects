@@ -22,11 +22,13 @@ CSV File → Extract → Transform → Parquet → Google BigQuery
 - Google Cloud SDK (authentication)
 
 ## Project Structure
+```
 project-1-etl-pipeline/
 ├── etl.py                  # Main ETL script
 ├── titanic_clean.parquet   # Cleaned output file
 ├── README.md               # Project documentation
 └── .gitignore              # Git ignore rules
+```
 
 ## How to Run
 1. Install dependencies:
