@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_titanic
+    description: "Cleaned staging table from raw titanic data"
+    columns:
+      - name: survived
+        description: "Whether passenger survived (true/false)"
+        tests:
+          - not_null
+      - name: passenger_class
+        description: "Ticket class (1=1st, 2=2nd, 3=3rd)"
+        tests:
+          - not_null
