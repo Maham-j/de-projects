@@ -1,0 +1,7 @@
+venv/
+**/venv/
+target/
+**/target/
+__pycache__/
+*.pyc
+*.csv
