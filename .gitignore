@@ -5,3 +5,5 @@ target/
 __pycache__/
 *.pyc
 *.csv
+project-4-airflow-snowflake/logs/ 
+project-4-airflow-snowflake/plugins/ 
