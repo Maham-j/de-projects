@@ -11,4 +11,4 @@ models:
       - name: passenger_class
         description: "Ticket class (1=1st, 2=2nd, 3=3rd)"
         tests:
-          - not_null
+          - not_nullcd
