@@ -3,6 +3,7 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime
 import requests
 import pandas as pd
+import os
 
 # Define default arguments for the DAG
 default_args = {
@@ -52,7 +53,7 @@ def load_to_snowflake():
         account=os.environ["SNOWFLAKE_ACCOUNT"],
         database="TITANIC_DB",
         schema="PUBLIC"
-    
+    )
     cursor = conn.cursor()
     
     # Create table if not exists
