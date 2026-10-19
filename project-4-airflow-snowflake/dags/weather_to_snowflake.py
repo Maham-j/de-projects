@@ -6,8 +6,8 @@ import pandas as pd
 
 # Define default arguments for the DAG
 default_args = {
-    'owner': 'maham',
-    'retries': '1',
+    'owner': 'owner_name',
+    'retries': 1,
 
 }
 
