@@ -47,12 +47,11 @@ def load_to_snowflake():
     
     # Connect to Snowflake
     conn = snowflake.connector.connect(
-        user='snowflake_user',
-        password='snowflake_password',
-        account='snowflake_account',
-        database='TITANIC_DB',
-        schema='PUBLIC'
-    )
+        user=os.environ["SNOWFLAKE_USER"],
+        password=os.environ["SNOWFLAKE_PASSWORD"],
+        account=os.environ["SNOWFLAKE_ACCOUNT"],
+        database="TITANIC_DB",
+        schema="PUBLIC"
     
     cursor = conn.cursor()
     
