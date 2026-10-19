@@ -22,7 +22,8 @@ def extract_weather():
         "timezone": "Asia/Karachi",
         "past_days": 7
     }
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, timeout=30)
+    response.raise_for_status()
     data = response.json()
     
     # Save to CSV so next task can read it
@@ -65,12 +66,44 @@ def load_to_snowflake():
         )
     """)
     
-    # Insert data
+    
+    # Insert new dates or update existing dates
+    merge_sql = """
+        MERGE INTO weather_data AS target
+        USING (
+            SELECT
+                %s::DATE AS date,
+                %s::FLOAT AS temp_max,
+                %s::FLOAT AS temp_min,
+                %s::FLOAT AS precipitation
+        ) AS source
+        ON target.date = source.date
+
+        WHEN MATCHED THEN UPDATE SET
+            target.temp_max = source.temp_max,
+            target.temp_min = source.temp_min,
+            target.precipitation = source.precipitation
+
+        WHEN NOT MATCHED THEN INSERT (
+            date, temp_max, temp_min, precipitation
+        )
+        VALUES (
+            source.date, source.temp_max,
+            source.temp_min, source.precipitation
+        )
+    """
+
     for _, row in df.iterrows():
         cursor.execute(
-            "INSERT INTO weather_data VALUES (%s, %s, %s, %s)",
-            (row['date'], row['temp_max'], row['temp_min'], row['precipitation'])
+            merge_sql,
+            (
+                row['date'],
+                row['temp_max'],
+                row['temp_min'],
+                row['precipitation']
+            )
         )
+
     
     conn.commit()
     cursor.close()
